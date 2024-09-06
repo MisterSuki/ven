@@ -16,18 +16,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Settings } from "@api/Settings";
 import { debounce } from "@shared/debounce";
 import { VENCORD_USER_AGENT } from "@shared/vencordUserAgent";
 import { getCurrentChannel } from "@utils/discord";
 import { useAwaiter } from "@utils/react";
-import { findStoreLazy } from "@webpack";
+import { findStore } from "@webpack";
 import { UserProfileStore, UserStore } from "@webpack/common";
 
 import { settings } from "./settings";
 import { CachePronouns, PronounCode, PronounMapping, PronounsResponse } from "./types";
 
-const UserSettingsAccountStore = findStoreLazy("UserSettingsAccountStore");
+const UserSettingsAccountStore = findStore("UserSettingsAccountStore");
 
 type PronounsWithSource = [pronouns: string | null, source: string, hasPendingPronouns: boolean];
 const EmptyPronouns: PronounsWithSource = [null, "", false];
@@ -156,7 +155,7 @@ export function extractPronouns(pronounSet?: { [locale: string]: PronounCode[]; 
     if (!pronounSet || !pronounSet.en) return PronounMapping.unspecified;
     // PronounDB returns an empty set instead of {sets: {en: ["unspecified"]}}.
     const pronouns = pronounSet.en;
-    const { pronounsFormat } = Settings.plugins.PronounDB as { pronounsFormat: PronounsFormat, enabled: boolean; };
+    const { pronounsFormat } = settings.store;
 
     if (pronouns.length === 1) {
         // For capitalized pronouns or special codes (any, ask, avoid), we always return the normal (capitalized) string

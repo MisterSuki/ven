@@ -7,7 +7,7 @@
 import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import { findComponentByCodeLazy } from "@webpack";
+import { findComponentByCode } from "@webpack";
 
 interface Activity {
     timestamps?: ActivityTimestamps;
@@ -18,7 +18,7 @@ interface ActivityTimestamps {
     end?: string;
 }
 
-const ActivityTimeBar = findComponentByCodeLazy<ActivityTimestamps>(".Millis.HALF_SECOND", ".bar", ".progress");
+const ActivityTimeBar = findComponentByCode<ActivityTimestamps>(".Millis.HALF_SECOND", ".bar", ".progress");
 
 export const settings = definePluginSettings({
     hideActivityDetailText: {

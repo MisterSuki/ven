@@ -18,11 +18,11 @@
 
 import "./VoiceChannelSection.css";
 
-import { findByPropsLazy } from "@webpack";
+import { findByProps } from "@webpack";
 import { Button, Forms, PermissionStore, Toasts } from "@webpack/common";
 import { Channel } from "discord-types/general";
 
-const ChannelActions = findByPropsLazy("selectChannel", "selectVoiceChannel");
+const ChannelActions = findByProps("selectChannel", "selectVoiceChannel");
 
 const CONNECT = 1n << 20n;
 
