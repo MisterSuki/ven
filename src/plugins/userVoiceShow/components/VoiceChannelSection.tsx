@@ -18,16 +18,14 @@
 
 import "./VoiceChannelSection.css";
 
+import type { ChannelRecord } from "@vencord/discord-types";
 import { findByPropsLazy } from "@webpack";
-import { Button, Forms, PermissionStore, Toasts } from "@webpack/common";
-import { Channel } from "discord-types/general";
+import { Button, Forms, Permissions, PermissionStore, Toasts } from "@webpack/common";
 
-const ChannelActions = findByPropsLazy("selectChannel", "selectVoiceChannel");
-
-const CONNECT = 1n << 20n;
+const SelectedChannelActionCreators = findByPropsLazy("selectChannel", "selectVoiceChannel");
 
 interface VoiceChannelFieldProps {
-    channel: Channel;
+    channel: ChannelRecord;
     label: string;
     showHeader: boolean;
 }
@@ -42,8 +40,8 @@ export const VoiceChannelSection = ({ channel, label, showHeader }: VoiceChannel
             size={Button.Sizes.SMALL}
 
             onClick={() => {
-                if (PermissionStore.can(CONNECT, channel))
-                    ChannelActions.selectVoiceChannel(channel.id);
+                if (PermissionStore.can(Permissions.CONNECT, channel))
+                    SelectedChannelActionCreators.selectVoiceChannel(channel.id);
                 else
                     Toasts.show({
                         message: "Insufficient permissions to enter the channel.",
